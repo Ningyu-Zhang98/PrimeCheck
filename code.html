@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
   <head>
-    <title>App Name: A coding Project By John Zhang</title>
+    <title>Prime Check: A coding Project By John Zhang</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -24,13 +24,13 @@
 
     <link rel="stylesheet" href="css/site.css" />
     <link rel="icon" type="image/png" href="img/favicon-32x32.png" />
-    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/prism.css" />
     <!-- Convert this to an external style sheet -->
   </head>
 
   <body class="d-flex flex-column h-100">
     <!-- Nav section -->
-   <nav class="navbar navbar-expand-md navbar-dark fixed-top"> 
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
       <div class="container-fluid">
         <a class="navbar-brand" href="#"
           ><img
@@ -53,17 +53,18 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a
-              >
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="app.html">The App</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="code.html">The Code</a>
+              <a class="nav-link active" aria-current="page" href="code.html"
+                >The Code</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" target="_blank" href="#">Git Repo</a>
+              <a class="nav-link" target="_blank" href="https://github.com/Ningyu-Zhang98/PrimeCheck">Git Repo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" target="_blank" href="#">About</a>
@@ -71,28 +72,98 @@
           </ul>
         </div>
       </div>
-    </nav> 
+    </nav>
 
     <main class="flex-shrink-0">
       <div class="container my-3 py-5 px-5">
-        <h2 class="border-1 border-bottom border-dark">The Code for APP NAME</h2>
+        <h2 class="border-1 border-bottom border-dark">
+          The Code for Prime Check
+        </h2>
         <div class="row row-cols-1 row-cols-md-2">
-            <div class="col-lg-8">
-                <pre class="line-numbers">
+          <div class="col-lg-8">
+            <pre class="line-numbers">
                     <code class="language-javascript dark">
-                        //Call hello world
-                        function HelloWorld(){
-                        alert('hello world');
-                        }
+                      //Get the values from the page
+                      //Starts or controller funciton
+                      function getValues(){
+                          //get values from the page
+                          let startValue = document.getElementById("startValue").value;
+                          let endValue = document.getElementById("endValue").value;
+                          //Parse into integers
+                          startValue = parseInt(startValue);
+                          endValue = parseInt(endValue);
+                      
+                          if (Number.isInteger(startValue)&& Number.isInteger(endValue)) {
+                              //Call generate numbers
+                              let numbers =  generateNumber(startValue, endValue);
+                              displayNumbers(numbers);
+                      
+                          } else {
+                              alert("You must have integers");
+                          }
+                         
+                      }
+                      
+                      
+                      //Generate numbers from startvalue to the endValue 
+                      //Logic function(s)
+                      function generateNumber(sValue, eValue){
+                          let numbers = []
+                          for(let index = sValue; index <= eValue; index++){
+                              numbers.push(index);
+                      
+                          }
+                          return numbers
+                      }
+                      
+                      //Check if the number is a prime number
+                      function isPrime(n){
+                          if(n<3) return n>1;
+                          else if (n%2==0 || n%3==0) return false
+                          else if (n<25) return true;
+                          let i = 5;
+                          while (i*i <= n){
+                              if(n%i==0 || n%(i+2)==0) return false
+                              i += 6
+                          }
+                          return true
+                      
+                      }
+                      
+                      //Display the numbers and mark even numbers bold
+                      //Display or view functions
+                      function displayNumbers(numbers){
+                          let templateRows = "";
+                          let className = "notPrime"
+                          for(let index=0; index < numbers.length; index++){
+                              let number = numbers[index];
+                              if (isPrime(number)==true){
+                                  className = "prime"
+                              } else {
+                                  className = "notPrime"
+                              }
+                              //This does not render correcntly with Prism
+                              templateRows += `<tr><td class = "${className}" > ${number} </td><tr>`;
+                          }
+                      
+                          document.getElementById("results").innerHTML = templateRows
+                      
+                      }
                     </code>
                 </pre>
-            </div>
-            <div class="col-lg-4">
-                <p>The code is structure in one fucntion</p>
-                <h5>Hello World</h5>
-                <p>Hello World is a function that displays an alert with a message of Hello World</p>
-
-            </div>
+          </div>
+          <div class="col-lg-4">
+            <h5>Prime Check</h5>
+            <p>
+              Prime Check is an application that bolds all of the prime numbers
+              between the specified starting number and ending number
+              (inclusive). The implementation follows the
+              Model-View-Controller(MVC) pattern. The controller function is
+              getValues(), the model fucntions include generateNumber(sValue,
+              eValue) and isPrime(n), and finally the view function is
+              disPlayNumbers(numbers)
+            </p>
+          </div>
         </div>
       </div>
     </main>
@@ -145,13 +216,12 @@
 
     <script src="js/prism.js"></script>
     <script>
-        Prism.plugins.NormalizeWhitespace.setDefaults({
-            'remove-trailing': true,
-            'remove-indent': true,
-            'left-trim': true,
-            'right-trim': true
-        })
+      Prism.plugins.NormalizeWhitespace.setDefaults({
+        "remove-trailing": true,
+        "remove-indent": true,
+        "left-trim": true,
+        "right-trim": true,
+      });
     </script>
-
   </body>
 </html>
