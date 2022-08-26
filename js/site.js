@@ -57,7 +57,7 @@ function displayNumbers(numbers){
         } else {
             className = "notPrime"
         }
-        templateRows += `<tr><td class = "${className}" > ${number} </td><tr>`;
+        templateRows += `<tr><td class = "${className}" > ${number} </td></tr>`;
     }
 
     document.getElementById("results").innerHTML = templateRows
